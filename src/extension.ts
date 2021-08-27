@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { errorMsg, infoMsg } from './utils/Alert';
+import { indexPageConfig } from './utils/Config';
 import getWebViewContent, { compileViewContent, parseResUri } from './utils/getWebViewContent';
 
 // this method is called when your extension is activated
@@ -32,8 +33,15 @@ export function activate(context: vscode.ExtensionContext) {
 			const flower = parseResUri(context, panel, 'image/flower.gif')
 			infoMsg(flower)
 			const html = compileViewContent(temp, {
-				content: "pug compile content",
-				flower
+				...indexPageConfig,
+				resUri: (() => {
+					const keys = Object.keys(indexPageConfig.resUri) as (keyof typeof indexPageConfig.resUri)[]
+					const res = {} as Partial<typeof indexPageConfig.resUri>
+					for (const key of keys) {
+						res[key] = parseResUri(context, panel, indexPageConfig.resUri[key])
+					}
+					return res
+				})()
 			})
 			panel.webview.html = html
 		} catch (error) {
