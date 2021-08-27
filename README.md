@@ -4,7 +4,7 @@
 
 ## Features
 
-已经完成weview部分配置，使用pug渲染html，并通过格式转换自定注入转化后资源地址，已经引入vue3
+已经完成webview部分配置，使用pug渲染html，并通过格式转换自定注入转化后资源地址，已经引入vue3
 
 ## TODO
 [x] 配置完成Webview
